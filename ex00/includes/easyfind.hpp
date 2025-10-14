@@ -6,12 +6,16 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 09:13:16 by nolecler          #+#    #+#             */
-/*   Updated: 2025/10/10 10:23:46 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/10/14 09:20:06 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #pragma once
+
 #include <exception>
+#include <iterator>
+#include <iostream>
+ #include <algorithm> 
 
 class NotFoundException : public std::exception
 {
