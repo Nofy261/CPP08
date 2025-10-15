@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:05:06 by nolecler          #+#    #+#             */
-/*   Updated: 2025/10/14 11:38:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/10/15 10:56:20 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,20 +24,37 @@ class Span
         Span &operator=(const Span &other);
         ~Span();
 
-        template <typename InputIterator>
-        void addNumber(InputIterator begin, InputIterator end);// ajoute un entier au span , si depasse N throw exception
-
-
-        //shortestSpan()
+        void addNumber(int n);
+        unsigned int shortestSpan()const;
         unsigned int longestSpan()const;
 
-
-        class SpanException : public std::exception
+        
+        //sert a ajouter plusieurs elements en seule fois 
+        template <typename InputIterator>
+        void addNumber(InputIterator begin, InputIterator end)// ajoute un entier au span , si depasse N throw exception
+        {
+            //calculer combien d'element on veut ajouter
+            //verifier si ca rentre dans la capacite
+            //si oui on les ajoute 
+            //sinon exception lancee            
+        }
+        
+        // depassement de capacite
+        class OutOfRangeException : public std::exception
         {
             public :
                 const char* what() const throw();
             
         };
+
+        //Pas assez d'elements dans le tableau
+        class InvalidElementException : public std::exception
+        {
+            public :
+                const char* what() const throw();
+            
+        };
+        
         // Remplissage impossible si le tableau est pleine
         // Remplissage impossible si le tableau est vide ou ne contient que 1 nombre
         
@@ -52,8 +69,7 @@ class Span
 
 
     private :
-        unsigned int _N;
-        std::vector<int> _nb; 
+        unsigned int _sizeMax;
+        std::vector<int> _tab; 
 
-    
 };
