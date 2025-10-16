@@ -15,6 +15,7 @@
 
 
 // Le sujet demande  de tester le Span avec au moins 10 000 nombres.
+// un objet span est un objet capable de stocker des entiers
 class Span
 {
     public :
@@ -28,16 +29,6 @@ class Span
         unsigned int shortestSpan()const;
         unsigned int longestSpan()const;
 
-        
-        //sert a ajouter plusieurs elements en seule fois 
-        template <typename InputIterator>
-        void addNumber(InputIterator begin, InputIterator end)// ajoute un entier au span , si depasse N throw exception
-        {
-            //calculer combien d'element on veut ajouter
-            //verifier si ca rentre dans la capacite
-            //si oui on les ajoute 
-            //sinon exception lancee            
-        }
         
         // depassement de capacite
         class OutOfRangeException : public std::exception
@@ -54,22 +45,26 @@ class Span
                 const char* what() const throw();
             
         };
-        
-        // Remplissage impossible si le tableau est pleine
-        // Remplissage impossible si le tableau est vide ou ne contient que 1 nombre
-        
-        // longestSpan et shortestSpan = fct qui va retourner le plus grand ecart ou le plus petit ecart
-        // mais il doit y avoir au moins 2 nombres sinon exception
-        // ces deux fonction recoit un tableau;
-        //Fct qui calcule le plus petit ecart 
-        // si span = [1, 2, 3, 4];
-        // resultat = 2 - 1 = 1
-        
-    
 
+        //sert a ajouter plusieurs elements en une seule fois 
+        template <typename InputIterator>
+        void addNb(InputIterator begin, InputIterator end)// ajoute plusieus entier au span en une seule fois , si depasse N throw exception
+        {
+            unsigned int availableSpace = this->_sizeMax - _tab.size();//_tab.size permet de savoir le nombre d'elements present dans tab
+            if (availableSpace == 0)
+                throw OutOfRangeException();
+            //calculer combien d'element on veut ajouter
+            unsigned int numToAdd = std::distance(begin, end);
+
+            //verifier si ca rentre dans la capacite
+            if (numToAdd > availableSpace) // depasse le nombre de place dispo
+                throw OutOfRangeException();
+            else
+                _tab.insert(_tab.end(), begin, end); // on ajoute
+            // iterator insert(iterator pos, InputIterator first, InputIterator last); -> retourne un iterateur sur l element inserer  
+        }
 
     private :
         unsigned int _sizeMax;
         std::vector<int> _tab; 
-
 };
