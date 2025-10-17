@@ -13,6 +13,8 @@
 #include "Span.hpp"
 #include <algorithm>
 #include <iostream>
+#include <climits>
+#include <exception>
 
 Span::Span() : _sizeMax(0)
 {}
@@ -35,7 +37,7 @@ Span &Span::operator=(const Span &other)
 
 Span::~Span(){}
 
-//si taille = 0 a gerer?
+
 void Span::addNumber(int n)
 {
     if (_tab.size() >= _sizeMax) // la taille de stockage est depassé
@@ -45,14 +47,14 @@ void Span::addNumber(int n)
 }
 
 
-
+// cas a tester intmax - int min = overflow d ou le cast en long long
 unsigned int Span::longestSpan()const
 {
     if (this->_tab.size() < 2)
         throw InvalidElementException();
     
-    std::vector<int>::iterator min = std::min_element(_tab.begin(), _tab.end());
-    std::vector<int>::iterator max = std::max_element(_tab.begin(), _tab.end());
+    std::vector<int>::const_iterator min = std::min_element(_tab.begin(), _tab.end());
+    std::vector<int>::const_iterator max = std::max_element(_tab.begin(), _tab.end());
     
     long long diff = static_cast<long long>(*max) - static_cast<long long>(*min);
     return static_cast<unsigned int>(diff); 
@@ -60,34 +62,37 @@ unsigned int Span::longestSpan()const
 
 unsigned int Span::shortestSpan()const
 {
-    long long minDiff; // la plus petite difference
-    long long tmp;
-
-    minDiff = LLONG_MAX;
-    tmp = 0;
-    // verif qu'il y a au moins 2nombres
+    long long tmp = 0;
+    long long minDiff = LLONG_MAX; // init de la plus petite difference
     if (this->_tab.size() < 2)
         throw InvalidElementException();
-    // std::sort(iterator first, iterator last);
-    // on met dans l'ordre croissant puis on calcul l ecart entre chaque voisin 
-    std::sort(_tab.begin(), _tab.end()); // ->_tab = {1, 3, 4, 9} puis on compare 3-1 = 2; 4-3=1; 9-4=5 donc le plus petit =1 
-    for (unsigned int i = 0; i < _tab.size() - 1; i++)
+    std::vector<int> tabCopy = _tab; //copie car const non modifiable
+    std::sort(tabCopy.begin(), tabCopy.end()); // ->_tab = {1, 3, 4, 9} puis on compare 3-1 = 2; 4-3=1; 9-4=5 donc le plus petit =1 
+    for (unsigned int i = 0; i < tabCopy.size() - 1; i++)
     {
-        //on fait la soustraction en long pour eviter l overflow
-        tmp = static_cast<long long>(_tab[i + 1]) - static_cast<long long>(_tab[i]);
+        tmp = static_cast<long long>(tabCopy[i + 1]) - static_cast<long long>(tabCopy[i]);//on fait la soustraction en long pour eviter l overflow
         if (tmp < minDiff) // comparer l ecart entre chaque paire voisine
             minDiff = tmp;
     } 
-    return (static_cast<unsigned int>(minDiff)); // retourne la plus petite difference trouvee
+    return (static_cast<unsigned int>(minDiff));
 }
 
 
 const char* Span::OutOfRangeException::what()const throw()
 {
-    return ("Cannot add number — capacity exceeded.");
+    return ("Cannot add number — capacity exceeded or no elements present.");
 }
 
 const char* Span::InvalidElementException::what()const throw()
 {
-    return ("insufficient elements.");
+    return ("insufficient elements or empty container.");
+}
+
+void Span::printTab() const
+{
+    for (unsigned int i = 0; i < _tab.size(); i++)
+    {
+        std::cout << _tab[i] << " ";
+    }
+    std::cout << std::endl;
 }

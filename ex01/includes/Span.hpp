@@ -12,9 +12,9 @@
 
 #pragma once
 #include <vector>
+#include <exception>
+#include <iterator>
 
-
-// Le sujet demande  de tester le Span avec au moins 10 000 nombres.
 // un objet span est un objet capable de stocker des entiers
 class Span
 {
@@ -28,7 +28,7 @@ class Span
         void addNumber(int n);
         unsigned int shortestSpan()const;
         unsigned int longestSpan()const;
-
+        void printTab()const;
         
         // depassement de capacite
         class OutOfRangeException : public std::exception
@@ -48,7 +48,7 @@ class Span
 
         //sert a ajouter plusieurs elements en une seule fois 
         template <typename InputIterator>
-        void addNb(InputIterator begin, InputIterator end)// ajoute plusieus entier au span en une seule fois , si depasse N throw exception
+        void addMultiple(InputIterator begin, InputIterator end)// ajoute plusieus entier au span en une seule fois , si depasse N throw exception
         {
             unsigned int availableSpace = this->_sizeMax - _tab.size();//_tab.size permet de savoir le nombre d'elements present dans tab
             if (availableSpace == 0)
