@@ -1,0 +1,39 @@
+std::stack (la pile)= boite empillable (image vaisselle), on a acces qu au dernier element ajoutee Mais on ne peut pas toucher les autres elements du dessous
+push() : ajouter un elemnt sur le dessus  au top (ajout a la fin)
+pop() : retirer l'element du dessus (le dernier) (enlève le top)
+top() : on peut regarder ce dernier element sans l enlever (lit le top)
+size() : compter le nombre d'elements en tout (taille totale de la pile)
+Pas d'iterateurs
+std::stack<int> s;
+
+std::stack = adaptateur -> cache completement l'acces a son conteneur interne
+--> impossible de parcourir ou d'acceder aux elements du milieu
+Comme std::stack = adaptateur (emballage autour d'un conteneur existant qui est std::deque)
+
+A l'interieur de std::stack il y a un autre conteneur std::deque
+
+std::stack<int> s; equivalent a std::stack<int, std::deque<int> > s;
+
+stack cache deque et ne laisse faire que push a la fin, pop, top, size
+stack uitlise deque en interne pour stocker ses elements
+std::deque permet d’ajouter/enlever rapidement au début et à la fin.
+deque est un vra conteneur et possede des iterateurs donc peut acceder a tous les elements presents
+
+c, c’est le nom de l’attribut protégé dans la class std::stack, et il est de type Container, qui par défaut est un std::deque<T>.
+C’est dans ce conteneur c que tous les éléments de la stack sont stockés.
+c est un attribut protégé dans la classe std::stack, et il sert à stocker tous les éléments de la pile.
+Par défaut, ce c est un std::deque<T>, mais il peut aussi être un std::vector<T> ou un std::list<T> si tu le spécifies.
+
+c est le conteneur sous-jacent (par défaut un deque) qui contient tous les éléments de la pile (std::stack).
+
+
+template<typename T, typename Container = std::deque<T> >
+MutantStack<int> m1;  // T = int, Container = std::deque<int>
+MutantStack<std::string, std::vector<std::string> > m2;  // T = std::string, Container = vector
+
+class MutantStack : public std::stack<T, Container>
+mutant herite de stack qui stocke des elemets de type T(string, int ...), 
+utilise un conteneur interne de type Container(par defaut deque mais on peut lui passer aussi std::vector<T>etc..)
+
+Mutant a directement oush, pop, top, size grace a l heritage de stack
+Et aussi le conteneur interne this->c qui va permettre d ajouter begin et end pour rendre la classe iterable car stack ne l est pas
