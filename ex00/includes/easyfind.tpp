@@ -6,7 +6,7 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/10 10:19:27 by nolecler          #+#    #+#             */
-/*   Updated: 2025/10/14 09:19:22 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/10/18 14:20:15 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,5 @@ typename T::iterator easyfind(T& container, int nb)
 
 const char* NotFoundException::what()const throw()
 {
-    return ("Element not found");
+    return ("Element not found.");
 }

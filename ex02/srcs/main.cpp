@@ -1,4 +1,14 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.cpp                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/18 14:22:30 by nolecler          #+#    #+#             */
+/*   Updated: 2025/10/18 15:06:54 by nolecler         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "MutantStack.hpp"
 #include <list>
@@ -66,7 +76,7 @@ int main()
         ++it;
     }
     std::cout << std::endl;
-    std::stack<int> s(mstack);//on crée une pile s de type std::stack<int> en copiant le contenu de mstack.
+    std::stack<int> s(mstack);
     std::cout << "Top: " << s.top() << std::endl;
     std::cout << "Stack size: " << s.size() << std::endl;
 
@@ -96,5 +106,5 @@ int main()
     std::cout << std::endl;
     std::stack<int, std::list<int> > l(lst);
     std::cout << "List size: " << l.size() << std::endl;
-    return 0;
+    return (0);
 }

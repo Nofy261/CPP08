@@ -6,14 +6,15 @@
 /*   By: nolecler <nolecler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/14 10:05:10 by nolecler          #+#    #+#             */
-/*   Updated: 2025/10/14 10:24:09 by nolecler         ###   ########.fr       */
+/*   Updated: 2025/10/18 15:04:22 by nolecler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Span.hpp"
 #include <iostream>
+#include <ctime>
+#include <cstdlib>
 
-//tester le Span avec au moins 10 000 nombres.(sujet)
 int main()
 {
     std::cout << "**************************" <<std::endl;
@@ -44,8 +45,8 @@ int main()
             sp.addNumber(67);
 
             sp.printTab();
-            std::cout << sp.longestSpan() << std::endl;
-            std::cout << sp.shortestSpan() << std::endl;
+            std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+            std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
 
             sp.addNumber(2);
         }
@@ -69,12 +70,31 @@ int main()
         sp.addMultiple(v.begin(), v.end());
        
         sp.printTab();
-        std::cout << sp.shortestSpan() << std::endl;
-        std::cout << sp.longestSpan() << std::endl;
+        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << sp.longestSpan() << std::endl;
     }
     catch (const std::exception& e)
     {
         std::cerr << e.what() << std::endl;
     }
-    return 0;
+    
+    std::cout << "**************************" <<std::endl;
+    //test avec 10 000 nombres aléatoires ou plus
+    try
+    {
+        unsigned int N = 10000;
+        Span sp(N);
+
+        std::srand(static_cast<unsigned int>(std::time(0)));
+        for (unsigned int i = 0; i < N; ++i)
+            sp.addNumber(std::rand());
+
+        std::cout << "Shortest span: " << sp.shortestSpan() << std::endl;
+        std::cout << "Longest span: " << sp.longestSpan() << std::endl;
+    }
+    catch (const std::exception &e)
+    {
+        std::cerr << e.what() << std::endl;
+    }
+    return (0);
 }
